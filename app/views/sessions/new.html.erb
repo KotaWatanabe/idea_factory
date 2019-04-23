@@ -1,5 +1,7 @@
 <h1>Sign in</h1>
-
+<% if flash[:danger] %>
+  <p><%= flash[:danger] %></p>
+<% end %>
 <%= form_with url: session_path, local: true do |f| %>
   <div>
     <%= f.label :email %>

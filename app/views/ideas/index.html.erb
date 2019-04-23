@@ -1,4 +1,10 @@
 <div class="container">
+<% if flash[:alert] %>
+  <p><%= flash[:alert] %></p>
+<% end %>
+<% if flash[:success] %>
+  <p><%= flash[:success] %></p>
+<% end %>
         <% @ideas.each do |idea|%>
         <hr>
             <h4>
