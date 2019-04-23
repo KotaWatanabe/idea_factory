@@ -1,0 +1,20 @@
+<div class="container-fluid padding">
+  <div class="form">
+      <%= form_with(model: @idea, local: true) do |form| %>
+      <% if @idea.errors.present? %>
+        <p class="form-errors">
+          <%= @idea.errors.full_messages.join(", ") %>
+        </p>
+      <% end %>
+      <div class="form-group">
+        <%= form.label :title %> <br>
+        <%= form.text_field :title, class:"form-control"%>
+      </div>
+      <div class="form-group">
+        <%= form.label :description %> <br>
+        <%= form.text_area :description, class:"form-control"%>
+      </div>
+      <%= form.submit class:"btn btn-outline-primary" %>
+    <% end %>
+  </div>
+</div>

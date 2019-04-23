@@ -1,0 +1,30 @@
+<div class="container">
+        <% @ideas.each do |idea|%>
+        <hr>
+            <h4>
+                <%= link_to(idea.title, idea_path(idea))%>
+            </h4>
+            <p><%= idea.description %><p>
+            
+
+            <div class="idea-bar">
+                <span class="name px-2">By: <%= idea.user&.name || 'DELETED' %></span>
+                <button class="btn btn-outline-primary edit-btn mx-2">
+                    <%= link_to "Join", "#" %>
+           
+                </button>
+                <button class="btn btn-outline-primary delete-btn mx-2">  
+                 <% if idea.likes.find_by(user: current_user) %>   
+                  
+                    <%= link_to "Unlike",idea_like_path(idea.id, idea.likes.find_by(user: current_user)), method: :delete %>
+               
+                  <% else %>
+                 
+                    <%= link_to "Like",idea_likes_path(idea.id), method: :post %>
+            
+                  <% end %>
+                </button>
+                  <span class="counter"><%= pluralize(idea.likes.count, "like") %></span>
+            </div>
+        <% end %>
+</div>

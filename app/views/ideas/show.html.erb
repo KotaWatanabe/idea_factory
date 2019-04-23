@@ -1,0 +1,72 @@
+<div class="container-fluid padding">
+<h3><%= @idea.title %></h3>
+
+<p class="lead"><%= @idea.description %></p>
+<h4>
+  Created by: <%= @idea.user&.name || 'DELETED' %>
+</h4>
+
+<small>
+Created <%= time_ago_in_words(@idea.created_at) %> ago
+</small>
+
+<div>
+    <button class="btn btn-outline-primary edit-btn my-2">
+    <small>
+        <%= link_to "Edit", edit_idea_path(@idea) %>
+    </small> 
+    </button>
+    <button class="btn btn-outline-primary delete-btn my-2">
+    <small>
+        <%= link_to "Delete", idea_path(@idea),method: :delete, data: {confirm: "Are you sure?"} %>
+    </small> 
+    </button>
+
+    <section>
+  <h4>Reviews</h4>
+
+  <%= form_with(model: [@idea, @review], local: true) do |f| %>
+    <% if @review.errors.present? %>
+      <p class="form-errors">
+        <%= @review.errors.full_messages.join(", ") %>
+      </p>
+    <% end %>
+
+
+    <div class="form-group">
+      <%= f.text_area(
+      :description, cols: 50, rows: 5,
+      placeholder: "How do you think about this idea?",
+      class: "form-control"
+      ) %>
+    </div>
+    <%= f.submit "Review", class:"btn btn-outline-primary" %>
+  <% end %>
+
+  <hr />
+
+
+      <% @reviews.each do |review| %>
+          <p>
+          <%= review.description %> <br />
+          <small>
+            <%= link_to(
+            "Delete",
+            idea_review_path(@idea, review),
+            method: :delete, data: {
+              confirm: "Are you sure?"
+            }
+            ) %>
+          </small>
+          <small>
+            reviewed <%= time_ago_in_words(review.created_at) %> ago
+          </small>
+            <small>
+              reviewed by: <%= review.user&.name || 'DELETED' %>
+          </small>
+        </p>
+   
+      <% end %>
+  
+</section>
+</div>
